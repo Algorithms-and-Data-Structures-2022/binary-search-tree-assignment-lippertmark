@@ -26,9 +26,9 @@ int main(int argc, char** argv) {
   tree.Insert(7, 7);
   tree.Insert(14, 8);
   tree.Insert(13, 9);
-
+  tree.Remove(6);
   auto ans = tree.Find(10);
-  cout<<ans.value();
+  cout<<tree.Contains(6);
 
   return 0;
 }

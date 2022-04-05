@@ -39,6 +39,79 @@ namespace assignment {
   }
 
   bool BinarySearchTree::Remove(int key) {
+    if (root_ == nullptr) {
+      return false;
+    }
+    Node* temp = nullptr;
+    Node* del_node = root_;
+    bool flag = true;
+    while (del_node != nullptr) {
+      if (key == del_node->key) {
+        break;
+      }
+      if (key < del_node->key) {
+        temp = del_node;
+        flag = false;
+        del_node = del_node->left;
+      } else {
+        temp = del_node;
+        flag = true;
+        del_node = del_node->right;
+      }
+    }
+    if (del_node == nullptr) {
+      return false;
+    }
+    else {
+      if (flag) {
+        temp->right = nullptr;
+      } else {
+        temp->left = nullptr;
+      }
+      if (del_node->left != nullptr) {
+        Node* curr_node = root_;
+        Node* temp = nullptr;
+        int k = del_node->left->key;
+
+        while (curr_node != nullptr) {
+          if (k < curr_node->key) {
+            if (curr_node->left == nullptr) {
+              curr_node->left = del_node->left;
+              break;
+            }
+            curr_node = curr_node->left;
+          } else {
+            if (curr_node->right == nullptr){
+              curr_node->right = del_node->left;
+              break;
+            }
+            curr_node = curr_node->right;
+          }
+        }
+      }
+      if (del_node->right != nullptr) {
+        Node* curr_node = root_;
+        Node* temp = nullptr;
+        int k = del_node->right->key;
+
+        while (curr_node != nullptr) {
+          if (k < curr_node->key) {
+            if (curr_node->left == nullptr) {
+              curr_node->left = del_node->right;
+              break;
+            }
+            curr_node = curr_node->left;
+          }
+          else {
+            if (curr_node->right == nullptr){
+              curr_node->right = del_node->right;
+              break;
+            }
+            curr_node = curr_node->right;
+          }
+        }
+      }
+    }
 
     return true;
   }
