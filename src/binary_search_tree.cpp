@@ -1,5 +1,7 @@
 #include "assignment/binary_search_tree.hpp"
 
+using namespace std;
+
 namespace assignment {
 
   BinarySearchTree::~BinarySearchTree() {
@@ -7,51 +9,97 @@ namespace assignment {
   }
 
   void BinarySearchTree::Insert(int key, int value) {
-    // Write your code here...
+    Node* curr_node = root_;
+    bool flag = false;
+    Node* new_node = new Node(key, value);
+    if (curr_node == nullptr) {
+      root_ = new_node;
+    } else {
+      while (curr_node != nullptr) {
+        if (curr_node->key == key) {
+          flag = true;
+          curr_node->value = value;
+          break;
+        }
+        if (key < curr_node->key) {
+          if (curr_node->left == nullptr) {
+            curr_node->left = new_node;
+            break;
+          }
+          curr_node = curr_node->left;
+        } else {
+          if (curr_node->right == nullptr) {
+            curr_node->right = new_node;
+            break;
+          }
+          curr_node = curr_node->right;
+        }
+      }
+    }
   }
 
   bool BinarySearchTree::Remove(int key) {
-    // Write your code here...
-    return false;
+
+    return true;
   }
 
   void BinarySearchTree::Clear() {
-    // Write your code here...
+    clear(root_);
+    root_ = nullptr;
   }
 
   std::optional<int> BinarySearchTree::Find(int key) const {
-    // Write your code here...
-    return std::nullopt;
+    Node* found_node = find(key, root_);
+    if (found_node == nullptr) {
+      return nullopt;
+    } else {
+      return found_node->value;
+    }
   }
 
   bool BinarySearchTree::Contains(int key) const {
-    // Write your code here...
-    return false;
+
+    Node* found_node = find(key, root_);
+    if (found_node == nullptr) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   bool BinarySearchTree::IsEmpty() const {
-    return false;
+    return root_ == nullptr;
   }
 
   std::optional<int> BinarySearchTree::FindMin() const {
-    // Write your code here...
-    return std::nullopt;
+    if (root_ == nullptr) {
+      return nullopt;
+    }
+    Node* curr_node = root_;
+    while (curr_node->left != nullptr) {
+      curr_node = curr_node->left;
+    }
+    return curr_node->value;
   }
 
   std::optional<int> BinarySearchTree::FindMax() const {
-    // Write your code here...
-    return std::nullopt;
+    if (root_ == nullptr) {
+      return nullopt;
+    }
+    Node* curr_node = root_;
+    while (curr_node->right != nullptr) {
+      curr_node = curr_node->right;
+    }
+    return curr_node->value;
   }
 
   Node* BinarySearchTree::root() const {
-    return nullptr;
+    return root_;
   }
 
   // вспомогательные методы
 
-  void BinarySearchTree::insert(int key, int value, Node*& node) {
-    // Write your code here ...
-  }
+  void BinarySearchTree::insert(int key, int value, Node*& node) {}
 
   bool BinarySearchTree::remove(int key, Node*& node) {
     // Write your code here...
@@ -59,11 +107,27 @@ namespace assignment {
   }
 
   void BinarySearchTree::clear(Node* node) {
-    // Write your code here...
+    delete node;
+    /*if (node->left != nullptr){
+      clear(node->left);
+      clear(node->right);
+      delete node;
+    }*/
   }
 
   Node* BinarySearchTree::find(int key, Node* node) const {
-    // Write your code here...
+    if (node == nullptr) {
+      return nullptr;
+    }
+    if (node->key == key) {
+      return node;
+    }
+    if (key < node->key) {
+      return find(key, node->left);
+    }
+    if (key > node->key) {
+      return find(key, node->right);
+    }
     return nullptr;
   }
 
