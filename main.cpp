@@ -1,5 +1,5 @@
 #include <iostream>  // cout, cin
-
+#include <stdio.h>
 #include "assignment/binary_search_tree.hpp"  // BinarySearchTree
 
 using namespace std;
@@ -17,7 +17,6 @@ int main(int argc, char** argv) {
    */
 
   BinarySearchTree tree;
-
   tree.Insert(8, 1);
   tree.Insert(3, 2);
   tree.Insert(10, 3);
@@ -27,8 +26,9 @@ int main(int argc, char** argv) {
   tree.Insert(7, 7);
   tree.Insert(14, 8);
   tree.Insert(13, 9);
-
-  cout << "Write your code here ...\n";
+  tree.Remove(6);
+  auto ans = tree.Find(10);
+  cout<<tree.Contains(6);
 
   return 0;
 }
